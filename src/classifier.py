@@ -67,8 +67,8 @@ class Classifier:
         sentence2vec = word2vec.BagOfWords(w2vec)
         # Each word in a sentence will be encoded with its corresponding vector (size 300) in the embedding layer,
         # Each sentence contains N word -> N vector of size 300. In order to have the same input size for each sentence
-        # we will pad the sequence of words with zeros vector until 100 words (for sentences with more than 50 words:
-        # we will truncate the sentence at 50 words. (meaning we could possibly loss information)
+        # we will pad the sequence of words with zeros vector until 100 words (for sentences with more than 100 words:
+        # we will truncate the sentence at 100 words. (meaning we could possibly loss information)
         # If needed, this parameter could be set as more than 100
 
         sentences = [sentence2vec.encode(df["sentence"][i], ag_sentence=False, padding=100) for i in
