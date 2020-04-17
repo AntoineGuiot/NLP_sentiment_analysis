@@ -10,6 +10,7 @@ from sklearn.preprocessing import OneHotEncoder
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, LSTM, Input, concatenate
+import scipy
 
 current_folder = os.getcwd()
 
@@ -106,6 +107,12 @@ class Classifier:
         self.model.summary()  # show the summary of this model in logs
         # trainig :
 
+        if type(train_sentences) == scipy.sparse.csc.csc_matrix:
+            train_sentences = train_sentences.toarray()
+
+        if type(categories_train) == scipy.sparse.csc.csc_matrix:
+            categories_train = categories_train.toarray()
+
         self.model.fit((train_sentences, categories_train),
                        label_train,
                        epochs=50,
@@ -117,7 +124,15 @@ class Classifier:
         """Predicts class labels for the input instances in file 'datafile'
         Returns the list of predicted labels
         """
+
         sentences, categorie, _ = self.read_data(source, False)
+
+        if type(sentences) == scipy.sparse.csc.csc_matrix:
+            sentences = sentences.toarray()
+
+        if type(sentences) == scipy.sparse.csc.csc_matrix:
+            sentences = sentences.toarray()
+
         predictions = self.model.predict((sentences, categorie))
         predictions = np.argmax(predictions, axis=1) - 1
         predictions = predictions.tolist()
