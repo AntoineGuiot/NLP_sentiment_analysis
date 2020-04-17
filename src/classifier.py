@@ -130,8 +130,8 @@ class Classifier:
         if type(sentences) == scipy.sparse.csc.csc_matrix:
             sentences = sentences.toarray()
 
-        if type(sentences) == scipy.sparse.csc.csc_matrix:
-            sentences = sentences.toarray()
+        if type(categorie) == scipy.sparse.csc.csc_matrix:
+            categorie = categorie.toarray()
 
         predictions = self.model.predict((sentences, categorie))
         predictions = np.argmax(predictions, axis=1) - 1
